@@ -23,12 +23,12 @@ class Ticket
     private $message;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $comment;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", )
      */
     private $isActive;
 
