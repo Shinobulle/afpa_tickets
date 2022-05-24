@@ -57,17 +57,31 @@ class TicketController extends AbstractController
 
             return $this->redirectToRoute('app_ticket');
         }
-        return $this->render('ticket/create.html.twig', [
+        return $this->render('ticket/userForm.html.twig', [
             'form' => $form->createView(),
+            'title' => 'Création d\'un ticket',
         ]);
     }
 
     /**
      * @Route("/ticket/update/{id}", name="ticket_update", requirements={"id"="\d+"})
      */
-    public function updateTicket(Int $id, Request $request)
+    public function updateTicket(Ticket $ticket, Request $request)
     {
-        $ticket = $this->ticketRepository->findBy($id);
-        dd($ticket);
+        $form = $this->createForm(TicketType::class, $ticket, []);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            //nouveauté Symfony 5.4
+            $this->ticketRepository->add($ticket, true);
+
+            return $this->redirectToRoute('app_ticket');
+        }
+
+        return $this->render('ticket/userForm.html.twig', [
+            'form' => $form->createView(),
+            'title' => "Update du formulaire : {$ticket->getId()}",
+        ]);
     }
 }
