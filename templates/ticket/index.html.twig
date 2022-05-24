@@ -17,6 +17,7 @@
 					<th>ID</th>
 					<th>object</th>
 					<th>Created At</th>
+					<th>Department</th>
 					<th>Status</th>
 				</tr>
 			</thead>
@@ -26,6 +27,7 @@
 						<th scope="row">{{ ticket.id }}</th>
 						<td>{{ ticket.object }}</td>
 						<td>{{ ticket.createAt | date('d/m/y H:i') }}</td>
+						<td>{{ ticket.department.name}}</td>
 						<td>{{ ticket.isActive }}</td>
 					</tr>
 				{% endfor %}
