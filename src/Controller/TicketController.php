@@ -6,8 +6,6 @@ namespace App\Controller;
 use App\Entity\Ticket;
 use App\Form\TicketType;
 use App\Repository\TicketRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -41,7 +39,7 @@ class TicketController extends AbstractController
     /**
      * @Route("/ticket/create", name="ticket_create")
      */
-    public function createTicket(Request $request, ManagerRegistry $doctrine)
+    public function createTicket(Request $request)
     {
         $ticket = new Ticket;
 
@@ -54,14 +52,6 @@ class TicketController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $ticket->setObject($form['object']->getData())
-                ->setMessage($form['message']->getData())
-                ->setDepartment($form['department']->getData());
-
-            // $manager = $doctrine->getManager();
-            // $manager->persist($ticket);
-            // $manager->flush();
-
             //nouveauté Symfony 5.4
             $this->ticketRepository->add($ticket, true);
 
@@ -70,5 +60,14 @@ class TicketController extends AbstractController
         return $this->render('ticket/create.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/ticket/update/{id}", name="ticket_update", requirements={"id"="\d+"})
+     */
+    public function updateTicket(Int $id, Request $request)
+    {
+        $ticket = $this->ticketRepository->findBy($id);
+        dd($ticket);
     }
 }
