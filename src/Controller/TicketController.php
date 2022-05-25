@@ -29,6 +29,8 @@ class TicketController extends AbstractController
      */
     public function index(): Response
     {
+        // $user = $this->getUser();
+
         $tickets = $this->ticketRepository->findAll();
 
         // dd($tickets);
