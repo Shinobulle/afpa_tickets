@@ -11,7 +11,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-
+/**
+ * @Route("/ticket")
+ */
 class TicketController extends AbstractController
 {
 
@@ -23,7 +25,7 @@ class TicketController extends AbstractController
     }
 
     /**
-     * @Route("/ticket", name="app_ticket")
+     * @Route("/", name="app_ticket")
      */
     public function index(): Response
     {
@@ -37,14 +39,21 @@ class TicketController extends AbstractController
     }
 
     /**
-     * @Route("/ticket/create", name="ticket_create")
+     * @Route("/create", name="ticket_create")
+     * @Route("/update/{id}", name="ticket_update", requirements={"id"="\d+"})
      */
-    public function createTicket(Request $request)
+    public function ticket(Ticket $ticket = null, Request $request)
     {
-        $ticket = new Ticket;
+        if (!$ticket) {
+            $ticket = new Ticket;
 
-        $ticket->setIsActive(true)
-            ->setCreateAt(new \DateTimeImmutable());
+            $ticket->setIsActive(true)
+                ->setCreateAt(new \DateTimeImmutable());
+            $title = 'Création d\'un ticket';
+        } else {
+            $title = "Update du ticket : {$ticket->getId()}";
+        }
+
 
         $form = $this->createForm(TicketType::class, $ticket, []);
 
@@ -59,29 +68,7 @@ class TicketController extends AbstractController
         }
         return $this->render('ticket/userForm.html.twig', [
             'form' => $form->createView(),
-            'title' => 'Création d\'un ticket',
-        ]);
-    }
-
-    /**
-     * @Route("/ticket/update/{id}", name="ticket_update", requirements={"id"="\d+"})
-     */
-    public function updateTicket(Ticket $ticket, Request $request)
-    {
-        $form = $this->createForm(TicketType::class, $ticket, []);
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            //nouveauté Symfony 5.4
-            $this->ticketRepository->add($ticket, true);
-
-            return $this->redirectToRoute('app_ticket');
-        }
-
-        return $this->render('ticket/userForm.html.twig', [
-            'form' => $form->createView(),
-            'title' => "Update du formulaire : {$ticket->getId()}",
+            'title' => $title
         ]);
     }
 }
