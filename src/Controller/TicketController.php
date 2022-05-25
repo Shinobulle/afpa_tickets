@@ -42,7 +42,7 @@ class TicketController extends AbstractController
      * @Route("/create", name="ticket_create")
      * @Route("/update/{id}", name="ticket_update", requirements={"id"="\d+"})
      */
-    public function ticket(Ticket $ticket = null, Request $request)
+    public function ticket(Ticket $ticket = null, Request $request): Response
     {
         if (!$ticket) {
             $ticket = new Ticket;
@@ -70,5 +70,14 @@ class TicketController extends AbstractController
             'form' => $form->createView(),
             'title' => $title
         ]);
+    }
+
+    /**
+     * @Route ("/delete/{id}", name="ticket_delete", requirements={"id"="\d+"})
+     */
+    public function deleteTicket(Ticket $ticket): Response
+    {
+        $this->ticketRepository->remove($ticket, true);
+        return $this->redirectToRoute('app_ticket');
     }
 }
