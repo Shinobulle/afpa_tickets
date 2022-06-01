@@ -1,0 +1,40 @@
+
+{% block stylesheets %}
+     <link rel="stylesheet" href="https://bootswatch.com/5/united/bootstrap.min.css"> 
+ 
+
+{% endblock %}
+{% block body %}
+<section class="page_404">
+    <div class="container-fluid">
+        <div class="row">   
+        <div class="col-sm-12 col-md-12 col-lg-12 ">
+        <div class="col-sm-12 col-sm-offset-1  text-center">
+        <div class="four_zero_four_bg">
+            <h1 class="text-center py-5">Erreur Inconnue !</h1>
+        
+        <img src="https://c.tenor.com/r5MTf8fGpwAAAAAC/flashlight-mort.gif" alt="" srcset="">
+        
+        </div>
+        
+        <div class="contant_box_404">
+        <h3 class="h2">
+        Quelque chose est cassé, mais on ne sait pas quoi
+        </h3>
+        
+        <p>Notre équipe travaille dessus afin de réparer le problème...</p>
+        
+        <a href=" {{ path("app_login") }}" class="link_404">Retour à l'accueil</a>
+    </div>
+        </div>
+        </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}

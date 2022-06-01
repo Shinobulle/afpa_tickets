@@ -1,0 +1,40 @@
+
+{% block stylesheets %}
+    {# <link rel="stylesheet" href="//cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css"> #}
+ 
+
+{% endblock %}
+{% block body %}
+<section class="page_404">
+    <div class="container-fluid">
+        <div class="row">   
+        <div class="col-sm-12 col-md-12 col-lg-12 ">
+        <div class="col-sm-12 col-sm-offset-1  text-center">
+        <div class="four_zero_four_bg">
+            <h1 class="text-center py-5">Error 404</h1>
+        
+        <img src="https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif" alt="" srcset="">
+        
+        </div>
+        
+        <div class="contant_box_404">
+        <h3 class="h2">
+        Il semblerait que vous soyez perdu !
+        </h3>
+        
+        <p>La page que vous recherchez n'existe pas !</p>
+        
+        <a href=" {{ path("app_login") }}" class="link_404">Retour à l'accueil</a>
+    </div>
+        </div>
+        </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}

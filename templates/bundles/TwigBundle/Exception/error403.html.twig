@@ -1,0 +1,41 @@
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://bootswatch.com/5/united/bootstrap.min.css">
+ 
+
+{% endblock %}
+{% block body %}
+<section class="page_404">
+    <div class="container-fluid">
+        <div class="row">   
+        <div class="col-sm-12 col-md-12 col-lg-12 ">
+        <div class="col-sm-12 col-sm-offset-1  text-center">
+        <div class="four_zero_four_bg">
+            <h1 class="text-center py-5">Error 403</h1>
+        
+        <img src="https://media.giphy.com/media/njYrp176NQsHS/giphy.gif" alt="gandalf_forbidden" srcset="">
+
+        
+        </div>
+        
+        <div class="contant_box_404">
+        <h3 class="h2">
+        Il semblerait que vous soyez perdu !
+        </h3>
+        
+        <p>Vous n'avez pas le droit d'emprunter ce chemin !</p>
+        
+        <a href=" {{ path("app_login") }}" class="link_404">Faire demi-tour le plus rapidement possible</a>
+    </div>
+        </div>
+        </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}
