@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Details Tickets
+{% endblock %}
+
+{% block body %}
+
+	<div class="container">
+		<h1 class="my-3">Détail du Ticket</h1>
+		<center>
+			<a href="{{ path('app_ticket') }}" class="btn btn-light">Retour</a>
+		</center>
+		<table class="table table-dark table-striped table-hover">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Objet</th>
+					<th>Date de création</th>
+					<th>Departement</th>
+					<th>Status</th>
+					<th>Commentaire</th>
+					<th>Date de cloture</th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr>
+					<td>{{ ticket.id }}</td>
+					<td>{{ ticket.object }}</td>
+					<td>{{ ticket.createAt | date('d/m/y H:i') }}</td>
+					<td>{{ ticket.department.name }}</td>
+					<td>{{ ticket.isActive }}</td>
+					<td>{{ ticket.comment }}</td>
+					<td>{{ ticket.finishedAt | date('d/m/y H:i')}}</td>
+					<td>
+						<a href="{{ path('ticket_delete', {'id': ticket.id}) }}" class="btn btn-danger">Supprimer</a>
+					</td>
+					<td>
+						<a href="{{ path('ticket_update', {'id': ticket.id}) }}" class="btn btn-success">Modifier</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+{% endblock %}

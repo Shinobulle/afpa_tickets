@@ -1,0 +1,31 @@
+title:
+    ticket:
+        list: 'Tickets list'
+        create: 'Create a ticket'
+        update: 'Update ticket n°'
+    security:
+        login: 'Please sign in'
+
+table:
+    header:
+        subject: 'Subject'
+        creation_date: 'Creation date'
+        status: 'Status'
+        department: 'Department'
+
+button:
+    add: 'Add'
+    update: 'Update'
+    delete: 'Delete'
+    submit: 'Submit'
+
+user:
+    logout: 'Log out'
+    login: 'Log in'
+    connected_as: 'You are connected as'
+
+form:
+    label:
+        password: 'Password'
+        subject: 'Ticket subject'
+        message: 'Ticket message' 

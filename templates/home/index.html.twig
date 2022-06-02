@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home
+{% endblock %}
+{% block body %}
+	<body>
+
+		<h1 style='margin-top:2%;margin-left:5%'>Tableau de bord</h1>
+
+		<canvas id="myChartActive" style="width:100%;max-width:700px;position:absolute;margin-left:50%;margin-top:3%"></canvas>
+		<canvas id="myChartDep" style="width:100%;max-width:700px;position:absolute;margin-left:10%;margin-top:3%"></canvas>
+
+	</body>
+
+{% endblock %}
+{% block javascripts %}
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+	<script>
+		var graph = document.getElementById("myChartActive");
+var myCharts = new Chart('myChartActive', {
+type: 'pie',
+data: {
+labels: [
+'Tickets Terminés ', 'Ticket en Cours'
+],
+datasets: [
+{
+data: [
+{{ countNoActive }}, {{ countActive }}
+],
+backgroundColor: ['blue', 'cyan']
+}
+]
+},
+options: {}
+});
+
+
+var graph = document.getElementById("myChartDep");
+var myCharts = new Chart('myChartDep', {
+type: 'pie',
+data: {
+labels: [{{ nameDep | raw }}],
+datasets: [
+{
+data: [{{ nbTickets | join(',') }}],
+backgroundColor: [
+'blue',
+'cyan',
+'pink',
+'violet',
+'brown',
+'orange',
+'red',
+'grey',
+'white',
+'yellow'
+]
+}
+]
+},
+options: {}
+});
+	</script>
+
+{% endblock %}

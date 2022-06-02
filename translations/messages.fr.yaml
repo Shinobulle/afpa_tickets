@@ -1,0 +1,31 @@
+title:
+    ticket:
+        list: 'Liste des tickets'
+        create: 'Créer un ticket'
+        update: 'Modification du ticket n°'
+    security:
+        login: 'Veuillez vous connecter'
+
+table:
+    header:
+        subject: 'Objet'
+        creation_date: 'Date de création'
+        status: 'Statut'
+        department: 'Service'
+
+button:
+    add: 'Ajouter'
+    update: 'Modifier'
+    delete: 'Supprimer'
+    submit: 'Valider'
+
+user:
+    logout: 'Se déconnecter'
+    login: 'Se connecter'
+    connected_as: 'Vous êtes connecté en tant que'
+
+form:
+    label:
+        password: 'Mot de passe'
+        subject: 'Objet du ticket'
+        message: 'Message du ticket'
