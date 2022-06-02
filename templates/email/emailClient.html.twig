@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+		<link href="https://bootswatch.com/5/lux/bootstrap.min.css" rel="stylesheet">
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+		{% endblock %}
+
+	</head>
+	<body>
+
+
+		<style>
+
+			h1 {
+				color: red;
+			}
+
+			.numTicket {
+				font-size: 3vh;
+				color: blue;
+			}
+		</style>
+
+
+		<container>
+			<row class="header">
+				<h1>Bonjour
+					{{ app.user.name }}
+					!</h1>
+			</row>
+		</container>
+
+		<p class="">
+			Le ticket n°<span class="numTicket">{{ ticket.id }}</span>
+			contenant l'objet :
+			<span class="numTicket">
+				{{ticket.object}}
+			</span>
+			{{ text }}</p>
+
+
+		<br><br><br>
+		<p>L'équipe Technique vous souhaite une bonne journée.
+			<br><br>
+			Cordialement,
+
+		</p>
+	</body>
+</html>
