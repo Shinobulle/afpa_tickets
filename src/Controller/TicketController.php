@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Ticket;
 use App\Form\TicketType;
 use App\Repository\TicketRepository;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Workflow\Registry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
@@ -23,13 +24,15 @@ class TicketController extends AbstractController
     protected TicketRepository $ticketRepository;
     protected TranslatorInterface $ts;
     protected MailerInterface $mailer;
+    protected LoggerInterface $logger;
 
-    public function __construct(TicketRepository $ticketRepository, TranslatorInterface $ts, MailerInterface $mailer, Registry $registry)
+    public function __construct(TicketRepository $ticketRepository, TranslatorInterface $ts, MailerInterface $mailer, Registry $registry, LoggerInterface $logger)
     {
         $this->ticketRepository = $ticketRepository;
         $this->ts = $ts;
         $this->mailer = $mailer;
         $this->registry = $registry;
+        $this->logger = $logger;
     }
 
     /**
@@ -37,11 +40,30 @@ class TicketController extends AbstractController
      */
     public function index(): Response
     {
-        // $user = $this->getUser();
 
-        $tickets = $this->ticketRepository->findAll();
 
-        // dd($tickets);
+
+
+        if ($this->getUser()) {
+            $user = $this->getUser();
+            $userMail = $this->getUser()->getUserIdentifier();
+            $userPwd = $this->getUser()->getPassword();
+            $userRole = $this->getUser()->getRoles();
+
+            $this->logger->info('EMAIL', array($userMail));
+            $this->logger->info('PASSWORD', array($userPwd));
+            $this->logger->info('ROLE', array($userRole));
+        }
+
+        if (in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
+            $tickets = $this->ticketRepository->findAll();
+        } else {
+            $tickets = $this->ticketRepository->findBy(['user' => $user]);
+        }
+
+
+
+
 
         return $this->render('ticket/index.html.twig', [
             'tickets' => $tickets,
@@ -56,9 +78,10 @@ class TicketController extends AbstractController
     {
         if (!$ticket) {
             $ticket = new Ticket;
-
+            $user = $this->getUser();
             $ticket->setTicketStatut("initial")
-                ->setCreateAt(new \DateTimeImmutable());
+                ->setCreateAt(new \DateTimeImmutable())
+                ->setUser($user);
             // $title = 'Création d\'un ticket';
             $title = $this->ts->trans("title.ticket.create");
             $flag = true;

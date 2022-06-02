@@ -67,7 +67,7 @@ class AppFixtures extends Fixture
         $manager->flush();
 
         $allDepartments = $manager->getRepository(Department::class)->findAll();
-
+        $allUsers = $manager->getRepository(User::class)->findAll();
         // Création entre 30 et 50 tickets aléatoirement
         for ($t = 0; $t < mt_rand(30, 50); $t++) {
 
@@ -80,6 +80,7 @@ class AppFixtures extends Fixture
             $ticket->setMessage($faker->paragraph(3))
                 ->setComment($faker->paragraph(3))
                 ->setTicketStatut('initial')
+                ->setUser($faker->randomElement($allUsers))
                 ->setCreateAt(new \DateTimeImmutable())
                 ->setFinishedAt(!$ticket->getTicketStatut() == 'finished' ? ImmutableDateTime::immutableDateTimeBetween('now', '6 months') : null)
                 ->setObject($faker->sentence(6))
