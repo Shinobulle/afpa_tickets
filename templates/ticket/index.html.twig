@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ "title.ticket.list" | trans }}
+{% block title %}
+	{{ "title.ticket.list" | trans }}
 {% endblock %}
 
 {% block stylesheets %}
@@ -27,7 +28,7 @@
 			</thead>
 			<tbody>
 				{% for ticket in tickets %}
-					<tr>
+					<tr class="link" data-href="{{ path('ticket_detail', {'id': ticket.id}) }}" style="cursor: pointer;">
 						<th scope="row">{{ ticket.id }}</th>
 						<td>{{ ticket.object }}</td>
 						<td>{{ ticket.createAt | date('d/m/y H:i') }}</td>
@@ -50,7 +51,12 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
 	<script src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
 	<script>
-		$(document).ready(function () {
+		$(document).on('click', 'tr.link:not(a)', function (i) {
+i.stopPropagation();
+window.location.href = $(this).data('href');
+});
+
+$(document).ready(function () {
 $('#myTable').DataTable();
 });
 	</script>

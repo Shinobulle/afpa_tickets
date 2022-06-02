@@ -113,4 +113,12 @@ class TicketController extends AbstractController
 
         return $this->redirectToRoute('app_ticket');
     }
+
+    /**
+     * @Route("/details/{id}", name="ticket_detail", requirements={"id"="\d+"})
+     */
+    public function detailTicket(Ticket $ticket): Response
+    {
+        return $this->render('ticket/detail.html.twig', ['ticket' => $ticket]);
+    }
 }
