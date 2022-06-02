@@ -1,0 +1,27 @@
+framework:
+  workflows:
+    ticketTraitement:
+      type: "state_machine" # or 'workflow'
+      audit_trail:
+        enabled: true
+      marking_store:
+        type: "method"
+        property: "ticketStatut" # on va modifier la BDD en conséquence
+      supports:
+        - App\Entity\Ticket
+      initial_marking: initial
+      places:
+        - initial
+        - wip
+        - clientAcceptance
+        - finished
+      transitions:
+        to_wip:
+          from: initial
+          to: wip
+        to_client:
+          from: wip
+          to: clientAcceptance
+        to_finished:
+          from: [clientAcceptance,wip]
+          to: finished

@@ -22,8 +22,7 @@
 					<th>Created At</th>
 					<th>Department</th>
 					<th>Status</th>
-					<th>Modifier</th>
-					<th>Supprimer</th>
+					<th>Action</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -33,12 +32,24 @@
 						<td>{{ ticket.object }}</td>
 						<td>{{ ticket.createAt | date('d/m/y H:i') }}</td>
 						<td>{{ ticket.department.name}}</td>
-						<td>{{ ticket.isActive }}</td>
+						<td>{{ ticket.ticketstatut }}</td>
 						<td>
-							<a href="{{ path('ticket_update', {'id' : ticket.id }) }}" class="btn btn-secondary my-3">Modifier</a>
-						</td>
-						<td>
-							<a href="{{ path('ticket_delete', {'id' : ticket.id }) }}" class="btn btn-danger my-3">Supprimer</a>
+							{% if (ticket.ticketStatut != 'finished') %}
+								<a href="{{path('ticket_update',{'id' :ticket.id})}}" class="btn btn-success">
+									<em class="fa-solid fa-gears"></em>
+								</a>
+							{% endif %}
+							{% if ticket.ticketStatut == 'finished' %}
+								<a href="{{path('ticket_delete',{'id' :ticket.id})}}" class="btn btn-danger">
+									<i class="fa-solid fa-trash-can"></i>
+								</a>
+							{% endif %}
+
+							{% if ticket.ticketStatut == 'wip' %}
+								<a href="{{path('ticket_close',{'id' :ticket.id})}}" class="btn btn-warning">
+									<em class="fa-solid fa-square-xmark"></em>
+								</a>
+							{% endif %}
 						</td>
 					</tr>
 				{% endfor %}

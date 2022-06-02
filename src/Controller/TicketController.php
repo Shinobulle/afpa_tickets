@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Ticket;
 use App\Form\TicketType;
 use App\Repository\TicketRepository;
+use Symfony\Component\Workflow\Registry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,11 +24,12 @@ class TicketController extends AbstractController
     protected TranslatorInterface $ts;
     protected MailerInterface $mailer;
 
-    public function __construct(TicketRepository $ticketRepository, TranslatorInterface $ts, MailerInterface $mailer)
+    public function __construct(TicketRepository $ticketRepository, TranslatorInterface $ts, MailerInterface $mailer, Registry $registry)
     {
         $this->ticketRepository = $ticketRepository;
         $this->ts = $ts;
         $this->mailer = $mailer;
+        $this->registry = $registry;
     }
 
     /**
@@ -55,7 +57,7 @@ class TicketController extends AbstractController
         if (!$ticket) {
             $ticket = new Ticket;
 
-            $ticket->setIsActive(true)
+            $ticket->setTicketStatut("initial")
                 ->setCreateAt(new \DateTimeImmutable());
             // $title = 'Création d\'un ticket';
             $title = $this->ts->trans("title.ticket.create");
@@ -64,6 +66,10 @@ class TicketController extends AbstractController
             // $title = "Update du ticket : {$ticket->getId()}";
             $title = $this->ts->trans("title.ticket.update") . " :  {$ticket->getId()}";
             $flag = false;
+            $workflow = $this->registry->get($ticket, 'ticketTraitement');
+            if ($ticket->getTicketStatut() != "wip") {
+                $workflow->apply($ticket, 'to_wip');
+            }
         }
 
 
@@ -120,5 +126,17 @@ class TicketController extends AbstractController
     public function detailTicket(Ticket $ticket): Response
     {
         return $this->render('ticket/detail.html.twig', ['ticket' => $ticket]);
+    }
+
+    /** 
+     * @Route("/close/{id}", name="ticket_close",requirements={"id"="\d+"})
+     */
+    public function closeTicket(Ticket $ticket): Response
+    {
+        $workflow = $this->registry->get($ticket, 'ticketTraitement');
+        $workflow->apply($ticket, 'to_finished');
+        $this->ticketRepository->add($ticket, true);
+
+        return $this->redirectToRoute('app_ticket');
     }
 }

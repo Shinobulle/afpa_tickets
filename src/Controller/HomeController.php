@@ -25,8 +25,9 @@ class HomeController extends AbstractController
         $tabDep = [];
         $tabTickets = [];
 
-        $countActiveTicket = count($this->ticketRepository->getAllActive());
-        $countNoActiveTicket = count($this->ticketRepository->getAllNoActive());
+        $countActiveTicket = count($this->ticketRepository->findBy(['ticket_statut' => 'wip']));
+        $countNoActiveTicket = count($this->ticketRepository->findBy(['ticket_statut' => 'finished']));
+        $countInitalTicket = count($this->ticketRepository->findBy(['ticket_statut' => 'initial']));
         $countDepGroupBy = $this->ticketRepository->getAllDep();
 
         foreach ($countDepGroupBy as $tickets) {
@@ -40,6 +41,7 @@ class HomeController extends AbstractController
             'countDep' => $countDepGroupBy,
             'nbTickets' => $tabTickets,
             'nameDep' => implode(",", $tabDep),
+            'initial' => $countInitalTicket,
 
         ]);
     }
