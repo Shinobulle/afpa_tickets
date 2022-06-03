@@ -28,9 +28,9 @@ class Ticket
     private $comment;
 
     /**
-     * @ORM\Column(type="boolean", )
+     * @ORM\Column(type="string", columnDefinition="ENUM('initial','wip','clientAcceptance','finished')")
      */
-    private $isActive;
+    private $ticket_statut;
 
     /**
      * @ORM\Column(type="datetime_immutable")
@@ -52,6 +52,12 @@ class Ticket
      * @ORM\JoinColumn(nullable=false)
      */
     private $department;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="tickets")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
 
     public function getId(): ?int
     {
@@ -82,17 +88,6 @@ class Ticket
         return $this;
     }
 
-    public function getIsActive(): ?bool
-    {
-        return $this->isActive;
-    }
-
-    public function setIsActive(bool $isActive): self
-    {
-        $this->isActive = $isActive;
-
-        return $this;
-    }
 
     public function getCreateAt(): ?\DateTimeImmutable
     {
@@ -138,6 +133,30 @@ class Ticket
     public function setDepartment(?Department $department): self
     {
         $this->department = $department;
+
+        return $this;
+    }
+
+    public function getTicketStatut(): ?string
+    {
+        return $this->ticket_statut;
+    }
+
+    public function setTicketStatut(string $ticket_statut): self
+    {
+        $this->ticket_statut = $ticket_statut;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

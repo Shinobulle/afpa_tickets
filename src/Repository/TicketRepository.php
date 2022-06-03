@@ -49,23 +49,16 @@ class TicketRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getAllActive()
+    public function getAllWithStatuts($value)
     {
 
         return $this->createQueryBuilder('t')
-            ->where('t.isActive = 1')
+            ->where('t.ticket_statut != :val ')
+            ->setParameter('val', $value)
             ->getQuery()
             ->getResult();
     }
 
-    public function getAllNoActive()
-    {
-
-        return $this->createQueryBuilder('t')
-            ->where('t.isActive = 0')
-            ->getQuery()
-            ->getResult();
-    }
 
     //    /**
     //     * @return Ticket[] Returns an array of Ticket objects

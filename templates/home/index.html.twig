@@ -21,14 +21,14 @@ var myCharts = new Chart('myChartActive', {
 type: 'pie',
 data: {
 labels: [
-'Tickets Terminés ', 'Ticket en Cours'
+'Tickets Terminés ', 'Ticket en Cours', 'Ticket initale',
 ],
 datasets: [
 {
 data: [
-{{ countNoActive }}, {{ countActive }}
+{{ countNoActive }}, {{ countActive }}, {{ initial }}
 ],
-backgroundColor: ['blue', 'cyan']
+backgroundColor: ['blue', 'cyan', 'red']
 }
 ]
 },
