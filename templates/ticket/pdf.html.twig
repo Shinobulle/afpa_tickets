@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<title>Export PDF</title>
+	</head>
+	<body>
+		<div class="container">
+
+			<h1 class="my-3">Liste des tickets</h1>
+
+			<table class="table table-striped tabled-bordered" id="myTable">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Object</th>
+						<th>Created At</th>
+						<th>Department</th>
+						<th>Status</th>
+					</tr>
+				</thead>
+				<tbody>
+					{%for ticket in tickets %}
+						<tr>
+							<th scope="row">{{ ticket.id }}</th>
+							<td>{{ ticket.object }}</td>
+							<td>{{ ticket.createAt | date('d/m/Y H:i')}}</td>
+							<td>{{ ticket.department.name }}</td>
+							<td>{{ ticket.TicketStatut }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html></div></body></html>

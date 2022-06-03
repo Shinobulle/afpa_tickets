@@ -12,7 +12,11 @@
 	<div class="container">
 		<h1 class="my-3">{{ "title.ticket.list" | trans }}</h1>
 
-		<a href="{{ path('ticket_create') }}" class="btn btn-primary my-3">Ajouter un ticket</a>
+		<center>
+			<a href="{{ path('ticket_create') }}" class="btn btn-primary my-3">Ajouter un ticket</a>
+			<a href="{{ path('ticket_pdf') }}" class="btn btn-danger">Export PDF</a>
+			<a href="{{ path('ticket_excel') }}" class="btn btn-success">Export Excel</a>
+		</center>
 
 		<table class="table table-striped table-bordered table-hover" id="myTable">
 			<thead>
